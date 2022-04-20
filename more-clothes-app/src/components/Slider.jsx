@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-
+import { useState } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import {slideItems} from '../slide_data';
 
 const Container = styled.div`
     width: 100%;
@@ -26,11 +27,14 @@ const Arrow = styled.div`
     margin: auto;
     cursor: pointer;
     opacity: 0.7;
+    z-index: 2;
 
 `
 const Wrapper = styled.div`
     height: 100%;
     display: flex;
+    transition: all 1.5s ease;
+    transform: translateX(${props => props.slideIndex * -100 }vw);
 `
 const Slide = styled.div`
     width: 100vw;
@@ -70,37 +74,41 @@ const Button = styled.button`
     cursor: pointer;
 `
 
+
 const Slider = () => {
+
+    const [slideIndex, setSlideIndex] = useState(0)
+
+    const handleClick = (direction) => {
+        if (direction ==="left"){
+            setSlideIndex(slideIndex > 0 ? slideIndex -1 : 2);
+        } else {
+            setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 2);
+        }
+    }
   return (
     <Container>
-        <Arrow direction="left">
+        <Arrow direction="left" onClick={() => handleClick("left")}>
             <MdKeyboardArrowLeft/>
         </Arrow>
 
-        <Wrapper>
-            <Slide bg="fcf1ed">
+        <Wrapper slideIndex={slideIndex}>
+            {slideItems.map((item) => (
+
+            <Slide bg={item.bg}>
         <ImgContainer>
-            <Image src="https://images.unsplash.com/photo-1510951475896-ce8cacb1899f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"/>
+            <Image src={item.img}/>
         </ImgContainer>
         <InfoContainer>
-            <Title>EASTER SALE</Title>
-            <Desc>GET 20% OFF FROM SELECTED SALE ITEMS!</Desc>
+            <Title>{item.title}</Title>
+            <Desc>{item.desc}</Desc>
             <Button>SHOP NOW</Button>
         </InfoContainer>
             </Slide>
-            <Slide bg="f5fafd">
-        <ImgContainer>
-            <Image src="https://images.unsplash.com/photo-1510951475896-ce8cacb1899f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"/>
-        </ImgContainer>
-        <InfoContainer>
-            <Title>EASTER SALE</Title>
-            <Desc>GET 20% OFF FROM SELECTED SALE ITEMS!</Desc>
-            <Button>SHOP NOW</Button>
-        </InfoContainer>
-            </Slide>
+            ))}
         </Wrapper>
 
-        <Arrow direction="right">
+        <Arrow direction="right" onClick={() => handleClick("right")}>
             <MdKeyboardArrowRight/>
         </Arrow>
     </Container>
