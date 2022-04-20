@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
-import {slideItems} from '../slide_data';
+import {slideItems} from '../data';
 
 const Container = styled.div`
     width: 100%;
@@ -95,7 +95,7 @@ const Slider = () => {
         <Wrapper slideIndex={slideIndex}>
             {slideItems.map((item) => (
 
-            <Slide bg={item.bg}>
+            <Slide bg={item.bg} key={item.id} >
         <ImgContainer>
             <Image src={item.img}/>
         </ImgContainer>
