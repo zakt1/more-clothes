@@ -43,11 +43,6 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-const Link = styled.a`
-  margin: 5px 0px;
-  font-size: 12px;
-  text-decoration:underline;
-`
 
 
 const Login = () => {
