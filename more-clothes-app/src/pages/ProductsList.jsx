@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Products from '../components/Products';
+import { useLocation } from "react-router";
+import { useState } from "react";
 
 const Container = styled.div`
     
@@ -30,6 +32,8 @@ const Option = styled.option`
 `
 
 const ProductsList = () => {
+    const location = useLocation()
+    console.log(location)
   return (
     <Container>
         <Navbar/>
