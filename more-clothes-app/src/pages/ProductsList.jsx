@@ -32,13 +32,14 @@ const Option = styled.option`
 `
 
 const ProductsList = () => {
-    const location = useLocation()
-    console.log(location)
+    const locObj = useLocation()
+    const categoryFilter = locObj.pathname.split("/")[2]
+    
   return (
     <Container>
         <Navbar/>
         <Announcement/>
-        <Title>T-shirts</Title>
+        <Title>{categoryFilter}</Title>
         <FilterContainer>
             <Filter>
                 <FilterText>Filter Items</FilterText>
@@ -53,7 +54,7 @@ const ProductsList = () => {
             
 
         </FilterContainer>
-        <Products/>
+        <Products category={categoryFilter}/>
 
     </Container>
   )

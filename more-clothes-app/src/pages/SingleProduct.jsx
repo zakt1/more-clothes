@@ -2,6 +2,9 @@ import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
 import { MdRemove, MdAdd } from 'react-icons/md';
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 
 const Container = styled.div`
@@ -69,6 +72,25 @@ const Button = styled.button`
 `
 
 const SingleProduct = () => {
+
+    const locObj = useLocation()
+    const productId = locObj.pathname.split("/")[2]
+    console.log(productId, '<< productId')
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            const url =`http://localhost:5000/api/products/find/${productId}`
+            // const url =`http://localhost:5000/api/products/find/62641d0ca04325d14cb2c009`
+            try{
+                const singleProdRes = await axios.get(url)
+                console.log(singleProdRes.data)
+            }catch(err) {
+
+            }
+        }
+        fetchProduct()
+    }, [productId])
+
   return (
     <Container>
         <Navbar/>

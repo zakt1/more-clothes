@@ -1,5 +1,9 @@
 import styled from "styled-components";
 import { MdSearch, MdOutlineShoppingCart, MdFavoriteBorder } from 'react-icons/md';
+import {
+    Link
+  } from "react-router-dom";
+  import { useLocation } from "react-router-dom";
 
 
 const Info = styled.div`
@@ -65,6 +69,8 @@ const Icon = styled.div`
 `
 
 const Product = ({item}) => {
+    console.log(item, "<< item from Product component")
+
   return (
     <Container>
         <Circle/>
@@ -72,9 +78,11 @@ const Product = ({item}) => {
         <Info>
             <Icon>
                 <MdOutlineShoppingCart/>
-            </Icon>
+            </Icon>x
             <Icon>
+                <Link to={`/product/${item._id}`}>
                 <MdSearch/>
+                </Link>
             </Icon>
             <Icon>
                 <MdFavoriteBorder/>
