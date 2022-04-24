@@ -3,7 +3,7 @@ import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
 import { MdRemove, MdAdd } from 'react-icons/md';
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 
@@ -73,6 +73,8 @@ const Button = styled.button`
 
 const SingleProduct = () => {
 
+    const [product, setProduct] = useState({});
+    
     const locObj = useLocation()
     const productId = locObj.pathname.split("/")[2]
     console.log(productId, '<< productId')
@@ -83,7 +85,9 @@ const SingleProduct = () => {
             // const url =`http://localhost:5000/api/products/find/62641d0ca04325d14cb2c009`
             try{
                 const singleProdRes = await axios.get(url)
-                console.log(singleProdRes.data)
+                console.log(singleProdRes.data, '<< singleProdres.data')
+                setProduct(singleProdRes.data)
+
             }catch(err) {
 
             }
@@ -97,14 +101,14 @@ const SingleProduct = () => {
         <Announcement/>
         <Wrapper>
             <ImgContainer>
-                <Image src="https://www.dolcegabbana.com/dw/image/v2/AAGA_PRD/on/demandware.static/-/Sites-15/default/dwcdd0ef87/images/zoom/G8NC5ZG7B9H_W0800_2.jpg?sw=1484&sh=1888&sm=fit" />
+                <Image src={product.img} />
             </ImgContainer>
             <InfoContainer>
-                <Title>Overpriced T-shirt</Title>
+                <Title>{product.title}</Title>
                 <Desc>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos officia obcaecati at molestias reiciendis, omnis nemo nesciunt provident? Nesciunt perspiciatis non recusandae eveniet, mollitia dolore autem doloremque ea? Laudantium, enim.
+                    {product.desc}
                 </Desc>
-                <Price>£29</Price>
+                <Price>£{product.price}</Price>
                 <AddCartContainer>
                     <AmountContainer>
                         <MdRemove/>
