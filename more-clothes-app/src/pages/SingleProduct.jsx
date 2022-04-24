@@ -74,6 +74,7 @@ const Button = styled.button`
 const SingleProduct = () => {
 
     const [product, setProduct] = useState({});
+    const [quantity, setQuantity] = useState(1);
     
     const locObj = useLocation()
     const productId = locObj.pathname.split("/")[2]
@@ -95,6 +96,18 @@ const SingleProduct = () => {
         fetchProduct()
     }, [productId])
 
+    const handleQuantChange = (change) => {
+        if(change === "dec" ){
+            quantity > 1 && setQuantity(quantity - 1)
+        }else{
+            setQuantity(quantity + 1)
+        }   
+    }
+
+    const handleCartClick = () =>{
+        //  update cart contents
+    }
+
   return (
     <Container>
         <Navbar/>
@@ -111,11 +124,11 @@ const SingleProduct = () => {
                 <Price>£{product.price}</Price>
                 <AddCartContainer>
                     <AmountContainer>
-                        <MdRemove/>
-                        <Amount>1</Amount>
-                        <MdAdd/>
+                        <MdRemove onClick={() => handleQuantChange("dec")} />
+                        <Amount>{quantity}</Amount>
+                        <MdAdd onClick={() => handleQuantChange("inc")}/>
                     </AmountContainer>
-                    <Button>ADD TO CART</Button>
+                    <Button onClick={handleCartClick}>ADD TO CART</Button>
                 </AddCartContainer>
             </InfoContainer>
         </Wrapper>
