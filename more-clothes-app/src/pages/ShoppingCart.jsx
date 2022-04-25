@@ -2,6 +2,7 @@ import { MdAdd, MdRemove } from "react-icons/md"
 import styled from "styled-components"
 import Announcement from "../components/Announcement"
 import Navbar from "../components/Navbar"
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
     
@@ -143,6 +144,8 @@ const SummaryButton = styled.button`
 `
 
 const ShoppingCart = () => {
+    const cart = useSelector(state => state.cart)
+    console.log(cart, '<<< cart')
   return (
     <Container>
         <Navbar/>
@@ -160,51 +163,34 @@ const ShoppingCart = () => {
             </Top>
             <Body>
                 <Info>
-                    <Product>
+                    {cart.products.map((product) =>
+                        (<Product>
                         <ProductDetails>
-                             <Image src="https://tommy-europe.scene7.com/is/image/TommyEurope/DM0DM12479_YBR_alternate3?$main@2x$"/>
+                             <Image src={product.img}/>
                                  <Details>
-                                     <ProductName><b>Product:</b> TOMMY WHITE T-SHIRT</ProductName>
-                                     <ProductID><b>ID:</b> 3429285395</ProductID>
+                                     <ProductName>{product.title}</ProductName>
+                                     <ProductID>{product._id}</ProductID>
                                  </Details>
                         </ProductDetails>
                         <PriceDetails>
                             <ProductQuantContainer>
                                 <MdAdd/>
-                                <ProductQuant>2</ProductQuant>
+                                <ProductQuant>{product.prodQuantity}</ProductQuant>
                                 <MdRemove/>
                             </ProductQuantContainer>
-                            <ProductPrice> £33 </ProductPrice>
+                            <ProductPrice> £{product.price} </ProductPrice>
                         </PriceDetails>
                     
-                    </Product>
+                    </Product>))}
+                    
 
                     <SepL/>
-
-                    <Product>
-                        <ProductDetails>
-                             <Image src="https://tommy-europe.scene7.com/is/image/TommyEurope/FM0FM04086_GXZ_main?$main@2x$"/>
-                                 <Details>
-                                     <ProductName><b>Product:</b> COMFY SUEDE LOAFERS</ProductName>
-                                     <ProductID><b>ID:</b> 342928532345</ProductID>
-                                 </Details>
-                        </ProductDetails>
-                        <PriceDetails>
-                            <ProductQuantContainer>
-                                <MdAdd/>
-                                <ProductQuant>2</ProductQuant>
-                                <MdRemove/>
-                            </ProductQuantContainer>
-                            <ProductPrice> £55 </ProductPrice>
-                        </PriceDetails>
-                    
-                    </Product>
                 </Info>
                 <Summary>
                     <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                     <SummaryItem>
                         <SummaryItemText>Subtotal</SummaryItemText>
-                        <SummaryItemPrice> £68</SummaryItemPrice>
+                        <SummaryItemPrice> {cart.total}</SummaryItemPrice>
                     </SummaryItem>
                     <SummaryItem>
                         <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -216,7 +202,7 @@ const ShoppingCart = () => {
                     </SummaryItem>
                     <SummaryItem type="total">
                         <SummaryItemText >Order Total</SummaryItemText>
-                        <SummaryItemPrice> £57.40</SummaryItemPrice>
+                        <SummaryItemPrice> £{cart.total}</SummaryItemPrice>
                     </SummaryItem>
                     <SummaryButton>CHECKOUT NOW</SummaryButton>
                 </Summary>

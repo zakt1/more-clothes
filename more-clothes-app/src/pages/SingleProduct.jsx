@@ -4,7 +4,9 @@ import Navbar from "../components/Navbar";
 import { MdRemove, MdAdd } from 'react-icons/md';
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { addProduct } from "../redux/cartRedux";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 
 const Container = styled.div`
@@ -74,7 +76,8 @@ const Button = styled.button`
 const SingleProduct = () => {
 
     const [product, setProduct] = useState({});
-    const [quantity, setQuantity] = useState(1);
+    const [prodQuantity, setprodQuantity] = useState(1);
+    const dispatch = useDispatch()
     
     const locObj = useLocation()
     const productId = locObj.pathname.split("/")[2]
@@ -98,14 +101,18 @@ const SingleProduct = () => {
 
     const handleQuantChange = (change) => {
         if(change === "dec" ){
-            quantity > 1 && setQuantity(quantity - 1)
+            prodQuantity > 1 && setprodQuantity(prodQuantity - 1)
         }else{
-            setQuantity(quantity + 1)
+            setprodQuantity(prodQuantity + 1)
         }   
     }
 
     const handleCartClick = () =>{
         //  update cart contents
+        dispatch(
+            addProduct({...product, prodQuantity })
+
+        )
     }
 
   return (
@@ -125,7 +132,7 @@ const SingleProduct = () => {
                 <AddCartContainer>
                     <AmountContainer>
                         <MdRemove onClick={() => handleQuantChange("dec")} />
-                        <Amount>{quantity}</Amount>
+                        <Amount>{prodQuantity}</Amount>
                         <MdAdd onClick={() => handleQuantChange("inc")}/>
                     </AmountContainer>
                     <Button onClick={handleCartClick}>ADD TO CART</Button>

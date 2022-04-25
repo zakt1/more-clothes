@@ -69,7 +69,7 @@ const Icon = styled.div`
 `
 
 const Product = ({item}) => {
-    console.log(item, "<< item from Product component")
+
 
   return (
     <Container>
