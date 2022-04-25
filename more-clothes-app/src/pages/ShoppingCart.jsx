@@ -3,6 +3,9 @@ import styled from "styled-components"
 import Announcement from "../components/Announcement"
 import Navbar from "../components/Navbar"
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+// import { postCart1, addCheckout } from "../redux/cartRedux";
+import { postCartOrder, addCheckout } from "../redux/orderRedux";
 
 const Container = styled.div`
     
@@ -146,6 +149,12 @@ const SummaryButton = styled.button`
 const ShoppingCart = () => {
     const cart = useSelector(state => state.cart)
     console.log(cart, '<<< cart')
+    const dispatch = useDispatch()
+
+    const handleCheckout = () => {
+        dispatch(postCartOrder(...cart.products)).unwrap()
+    }
+
   return (
     <Container>
         <Navbar/>
@@ -204,7 +213,8 @@ const ShoppingCart = () => {
                         <SummaryItemText >Order Total</SummaryItemText>
                         <SummaryItemPrice> £{cart.total}</SummaryItemPrice>
                     </SummaryItem>
-                    <SummaryButton>CHECKOUT NOW</SummaryButton>
+                    {/* <SummaryButton onClick={handleCart()}>Add to CartState</SummaryButton> */}
+                    <SummaryButton onClick={handleCheckout()}>CHECKOUT NOW</SummaryButton>
                 </Summary>
             </Body>
         </Wrapper>

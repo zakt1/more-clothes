@@ -86,7 +86,6 @@ const SingleProduct = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             const url =`http://localhost:5000/api/products/find/${productId}`
-            // const url =`http://localhost:5000/api/products/find/62641d0ca04325d14cb2c009`
             try{
                 const singleProdRes = await axios.get(url)
                 console.log(singleProdRes.data, '<< singleProdres.data')
